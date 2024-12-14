@@ -1,5 +1,4 @@
 import { Injectable, signal, Signal, WritableSignal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Product } from '../model/product.model';
 import { Observable } from 'rxjs';
 
@@ -7,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProductService {
-
   private productsSignal: WritableSignal<Product[]> = signal<Product[]>([]);
+
   get products(): Signal<Product[]> {
     return this.productsSignal.asReadonly(); 
   }
@@ -22,10 +21,10 @@ export class ProductService {
     console.log(this.productsSignal());
   }
 
-  // update product
-  editProduct(id: any,updatedProduct: Product[]): void {
+  // edit product
+  editProduct(id: any, updatedProduct: Product[]): void {
     if (id > 0) {
-      const productToUpdate:any = updatedProduct; 
+      const productToUpdate: any = updatedProduct;
       const updatedProducts = this.productsSignal().map((product) =>
         product.id == id ? { ...product, ...productToUpdate } : product
       );
@@ -35,8 +34,8 @@ export class ProductService {
     }
   }
 
-  // delete product
-  
+  // delete products
+
   deleteProduct(productId: number): void {
     const filteredProducts = this.productsSignal().filter((product) => product.id !== productId);
     this.productsSignal.set(filteredProducts); 
@@ -47,8 +46,8 @@ export class ProductService {
     return this.productsSignal().filter((product) => product.category === category);
   }
 
-  
-  // get by id method
+
+  //get by id product
   getProductById(id: number) {
     return this.productsSignal().find((product) => product.id == id);
   }
