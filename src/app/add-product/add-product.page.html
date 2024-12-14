@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEditMode ? 'Edit Product' : 'Add Product' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+    <!-- Product Name -->
+    <ion-item>
+      <ion-label position="stacked">Product Name</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+    <ion-note *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" color="danger">
+      Product name is required.
+    </ion-note>
+
+    <!-- Price -->
+    <ion-item>
+      <ion-label position="stacked">Price</ion-label>
+      <ion-input type="number" formControlName="price"></ion-input>
+    </ion-item>
+    <ion-note *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" color="danger">
+      Price must be a positive number.
+    </ion-note>
+
+    <!-- Category -->
+    <ion-item>
+      <ion-label position="stacked">Category</ion-label>
+      <ion-select formControlName="category">
+        <ion-select-option value="Electronics">Electronics</ion-select-option>
+        <ion-select-option value="Clothing">Clothing</ion-select-option>
+        <ion-select-option value="Books">Books</ion-select-option>
+        <ion-select-option value="Others">Others</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-note *ngIf="productForm.get('category')?.invalid && productForm.get('category')?.touched" color="danger">
+      Please select a category.
+    </ion-note>
+
+    <!-- In Stock -->
+    <ion-item>
+      <ion-label>In Stock</ion-label>
+      <ion-toggle formControlName="status"></ion-toggle>
+    </ion-item>
+
+    <!-- Buttons -->
+    <div class="form-buttons">
+      <ion-button type="submit" expand="block" [disabled]="productForm.invalid">
+        {{ isEditMode ? 'Update Product' : 'Add Product' }}
+      </ion-button>
+      <ion-button type="button" color="light" expand="block" (click)="productForm.reset()">
+        Reset
+      </ion-button>
+    </div>
+  </form>
+</ion-content>
